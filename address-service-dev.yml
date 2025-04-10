@@ -1,27 +1,36 @@
-server:
-  port: 8082
-
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/address-micro-service
     username: postgres
     password: erkin
     driver-class-name: org.postgresql.Driver
-
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 30000
+      connection-timeout: 20000
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+      format_sql: true
+      use_sql_comments: true
+    open-in-view: false
   zipkin:
-    base-url: http://localhost:9411
+    base-url: http://localhost:9411  # Если Zipkin используется
+  # sleuth:
+  #   enabled: false  # Раскомментируйте, если Zipkin не нужен
 
-  # Если нужно включить отладку для Spring Cloud Config
-  logging:
-    level:
-      org.springframework.cloud.config: DEBUG
+server:
+  port: 8082
 
-# eureka:
-#   client:
-#     service-url:
-#       defaultZone: http://localhost:8761/eureka
-#     register-with-eureka: true
-#     fetch-registry: true
-#   instance:
-#     prefer-ip-address: true
-#     hostname: localhost
+logging:
+  level:
+    root: INFO
+    com.infybuzz: DEBUG
+    org.hibernate: WARN
+
+app:
+  custom:
+    timeout: 5000
+    max-retries: 3
