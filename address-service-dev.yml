@@ -27,7 +27,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
 address:
-    test: Changed-value
+    test: ChangedErkinУспех
 
 server:
   port: 8082
